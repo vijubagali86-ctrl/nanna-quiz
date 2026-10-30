@@ -14,7 +14,7 @@
 body{margin:0;background:var(--b);color:var(--f);font:16px/1.6 system-ui,sans-serif;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
 main{max-width:600px;margin:auto;padding:16px}
 h1{font-size:22px}h2{font-size:18px;margin:0 0 8px}
-.c{background:var(--c);border:1px solid var(--l);border-radius:14px;padding:14px;margin:10px 0}
+.c{display:block;background:var(--c);border:1px solid var(--l);border-radius:14px;padding:14px;margin:10px 0}
 .m{color:var(--m);font-size:14px}
 button{font:inherit;color:var(--f);background:var(--c);border:1px solid var(--l);border-radius:10px;padding:10px 14px;min-height:44px;margin:4px 0}
 .p{background:var(--a);color:var(--c);border-color:var(--a);font-weight:600}
@@ -25,55 +25,73 @@ button{font:inherit;color:var(--f);background:var(--c);border:1px solid var(--l)
 .bar i{display:block;height:100%;background:var(--a)}
 .e{background:var(--b);padding:10px;border-radius:10px}
 .big{font-size:44px;font-weight:700;text-align:center}
-input,textarea{width:100%;font:inherit;padding:10px;border:1px solid var(--l);border-radius:10px;background:var(--c);color:var(--f);margin-bottom:8px}
+.tm{font-size:20px;font-weight:700;color:var(--a)}
+input[type=text],textarea{width:100%;font:inherit;padding:10px;border:1px solid var(--l);border-radius:10px;background:var(--c);color:var(--f);margin-bottom:8px}
+input[type=checkbox]{width:20px;height:20px;vertical-align:middle;margin-right:6px}
 textarea{min-height:170px}
 .bad{color:#b3261e}
 </style>
 </head>
 <body>
 <main><h1>ನನ್ನ ಕ್ವಿಜ್</h1><div id="app"></div></main>
+<script src="questions.js"></script>
 <script>
 if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js');
-var K='nq1',S,$=document.getElementById('app'),V={};
+var K='nq1',S,$=document.getElementById('app'),V={},T=null;
 var D=[{id:'g',name:'ಸಾಮಾನ್ಯ ಜ್ಞಾನ',qs:[
-{q:'ಭಾರತದ ರಾಜಧಾನಿ ಯಾವುದು?',o:['ಮುಂಬೈ','ನವದೆಹಲಿ','ಚೆನ್ನೈ','ಕೋಲ್ಕತ್ತಾ'],a:1,e:''},
+{q:'ಭಾರತದ ರಾಜಧಾನಿ ಯಾವುದು?',o:['ಮುಂಬೈ','ನವದೆಹಲಿ','ಚೆನ್ನೈ','ಕೋಲ್ಕತ್ತಾ'],a:1,e:'ನವದೆಹಲಿ ಭಾರತದ ರಾಜಧಾನಿ.'},
 {q:'12 × 8 ಎಷ್ಟು?',o:['86','96','98','108'],a:1,e:'12 × 8 = 96'},
-{q:'ಸಸ್ಯಗಳು ದ್ಯುತಿಸಂಶ್ಲೇಷಣೆಗೆ ಯಾವ ಅನಿಲ ಬಳಸುತ್ತವೆ?',o:['ಆಮ್ಲಜನಕ','ಇಂಗಾಲದ ಡೈಆಕ್ಸೈಡ್','ಸಾರಜನಕ','ಜಲಜನಕ'],a:1,e:'ಸಸ್ಯಗಳು CO₂ ತೆಗೆದುಕೊಂಡು ಆಮ್ಲಜನಕ ಬಿಡುತ್ತವೆ.'},
-{q:'ಕರ್ನಾಟಕದ ರಾಜಧಾನಿ ಯಾವುದು?',o:['ಮೈಸೂರು','ಬೆಂಗಳೂರು','ಹುಬ್ಬಳ್ಳಿ','ಮಂಗಳೂರು'],a:1,e:''}]}];
-try{S=JSON.parse(localStorage.getItem(K))}catch(e){}
-S=S||{d:D,p:{}};
+{q:'ಕರ್ನಾಟಕದ ರಾಜಧಾನಿ ಯಾವುದು?',o:['ಮೈಸೂರು','ಬೆಂಗಳೂರು','ಹುಬ್ಬಳ್ಳಿ','ಮಂಗಳೂರು'],a:1,e:'ಬೆಂಗಳೂರು ಕರ್ನಾಟಕದ ರಾಜಧಾನಿ.'}]}];
+var L={};try{L=JSON.parse(localStorage.getItem(K))||{}}catch(e){}
+S={p:L.p||{},k:L.k,t:L.t,u:L.u||(L.d||[]).filter(function(d){return d.u})};
 function sv(){try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}}
+function all(){return(window.BANK&&window.BANK.length?window.BANK:D).concat(S.u)}
+function dk(i){return all().filter(function(d){return d.id==i})[0]}
 function E(t){return String(t).replace(/[&<>"]/g,function(c){return'&#'+c.charCodeAt(0)+';'})}
-function dk(i){return S.d.filter(function(d){return d.id==i})[0]}
-function home(){var h='';
-S.d.forEach(function(d){var p=S.p[d.id]||{},n=0;
-d.qs.forEach(function(_,i){if((p[i]||0)>2)n++});
-var m=Math.round(100*n/d.qs.length);
+function td(o){var d=new Date();d.setDate(d.getDate()-(o||0));return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()}
+function strk(){var k=S.k;return k&&(k.l===td(0)||k.l===td(1))?k.n:0}
+function bump(){var k=S.k||{n:0,l:''},t=td(0);if(k.l!==t){k.n=k.l===td(1)?k.n+1:1;k.l=t}S.k=k;sv()}
+
+function home(){clearInterval(T);var n=strk(),h='<div class=c>'+(n?'🔥 <b>'+n+' ದಿನಗಳ ಸರಣಿ</b>':'ಇಂದು ಒಂದು ಕ್ವಿಜ್ ಆಡಿ, ಸರಣಿ ಶುರು ಮಾಡಿ')+'</div>'+
+'<label class=c><input type=checkbox id=tt'+(S.t?' checked':'')+'>⏱ ಟೈಮರ್ ಮೋಡ್ (ಪ್ರತಿ ಪ್ರಶ್ನೆಗೆ 20 ಸೆಕೆಂಡ್)</label>';
+all().forEach(function(d){var p=S.p[d.id]||{},c=0;
+d.qs.forEach(function(_,i){if((p[i]||0)>2)c++});
+var m=Math.round(100*c/d.qs.length);
 h+='<div class=c><b>'+E(d.name)+'</b><div class=m>'+d.qs.length+' ಪ್ರಶ್ನೆಗಳು · ಕಲಿತಿದ್ದು '+m+'%</div><div class=bar><i style="width:'+m+'%"></i></div><button class=p data-a=s data-i="'+d.id+'">ಶುರು ಮಾಡಿ</button> '+(d.u?'<button data-a=x data-i="'+d.id+'">ಅಳಿಸಿ</button>':'')+'</div>'});
 $.innerHTML=h+'<button data-a=n>+ ಹೊಸ ಕ್ವಿಜ್ ಸೇರಿಸಿ</button>'}
+
+function tm(){clearInterval(T);if(!S.t)return;V.c=20;T=setInterval(function(){V.c--;var el=document.getElementById('tm');if(el)el.textContent='⏱ '+V.c;if(V.c<=0)pk(-1)},1000)}
 function st(id){var d=dk(id),p=S.p[id]||{};
-V={id:id,i:0,s:0,m:[],a:null,x:d.qs.map(function(_,i){return i}).sort(function(a,b){return(p[a]||0)-(p[b]||0)||Math.random()-.5}).slice(0,8)};qz()}
-function qz(){var d=dk(V.id),n=V.x[V.i],q=d.qs[n],h='<div class=m>'+(V.i+1)+' / '+V.x.length+'</div><div class=c><h2>'+E(q.q)+'</h2>';
+V={id:id,i:0,s:0,m:[],a:null,x:d.qs.map(function(_,i){return[i,(p[i]||0)+Math.random()]}).sort(function(a,b){return a[1]-b[1]}).slice(0,10).map(function(z){return z[0]})};tm();qz()}
+function qz(){var d=dk(V.id),q=d.qs[V.x[V.i]],h='<div class=m>'+E(d.name)+' · '+(V.i+1)+' / '+V.x.length+'</div>'+(S.t&&V.a==null?'<div id=tm class=tm>⏱ '+V.c+'</div>':'')+'<div class=c><h2>'+E(q.q)+'</h2>';
 q.o.forEach(function(o,k){var c='o';if(V.a!=null)c+=k==q.a?' g':k==V.a?' r':'';
 h+='<button class="'+c+'" data-a=k data-k='+k+(V.a!=null?' disabled':'')+'>'+E(o)+'</button>'});
-if(V.a!=null)h+='<p class=e><b>'+(V.a==q.a?'ಸರಿ!':'ತಪ್ಪು.')+'</b> '+E(q.e||'')+'</p><button class=p data-a=t>'+(V.i+1<V.x.length?'ಮುಂದೆ':'ಫಲಿತಾಂಶ ನೋಡಿ')+'</button>';
+if(V.a!=null)h+='<p class=e><b>'+(V.a==-1?'ಸಮಯ ಮುಗಿಯಿತು.':V.a==q.a?'ಸರಿ!':'ತಪ್ಪು.')+'</b> '+E(q.e||'')+'</p><button class=p data-a=t>'+(V.i+1<V.x.length?'ಮುಂದೆ':'ಫಲಿತಾಂಶ ನೋಡಿ')+'</button>';
 $.innerHTML=h+'</div><button data-a=h>ಬಿಡಿ</button>'}
-function pk(k){var n=V.x[V.i],q=dk(V.id).qs[n],p=S.p[V.id]=S.p[V.id]||{};
+function pk(k){if(V.a!=null)return;clearInterval(T);var n=V.x[V.i],q=dk(V.id).qs[n],p=S.p[V.id]=S.p[V.id]||{};
 V.a=k;if(k==q.a){V.s++;p[n]=Math.min(3,(p[n]||0)+1)}else{p[n]=0;V.m.push(n)}sv();qz()}
-function nx(){V.i++;V.a=null;if(V.i<V.x.length)return qz();
-var d=dk(V.id),h='<div class=c><div class=big>'+V.s+' / '+V.x.length+'</div></div>';
+function nx(){V.i++;V.a=null;if(V.i<V.x.length){tm();return qz()}
+bump();var d=dk(V.id),h='<div class=c><div class=big>'+V.s+' / '+V.x.length+'</div><p style="text-align:center">🔥 '+strk()+' ದಿನಗಳ ಸರಣಿ</p></div>';
 if(V.m.length){h+='<div class=c><h2>ಮತ್ತೊಮ್ಮೆ ನೋಡಿ</h2>';
-V.m.forEach(function(n){var q=d.qs[n];h+='<p><b>'+E(q.q)+'</b><br>ಉತ್ತರ: '+E(q.o[q.a])+'</p>'});h+='</div>'}
-$.innerHTML=h+'<button class=p data-a=s data-i="'+V.id+'">ಮತ್ತೆ ಆಡಿ</button> <button data-a=h>ಮುಖಪುಟ</button>'}
-function ad(m){$.innerHTML='<div class=c><input id=nm placeholder="ಕ್ವಿಜ್ ಹೆಸರು"><textarea id=tx placeholder="ಪ್ರತಿ ಸಾಲಿಗೆ ಒಂದು ಪ್ರಶ್ನೆ:&#10;ಕರ್ನಾಟಕದ ರಾಜಧಾನಿ? | ಮೈಸೂರು | ಬೆಂಗಳೂರು | ಮಂಗಳೂರು | 2&#10;ಕೊನೆಯ ಸಂಖ್ಯೆ = ಸರಿಯಾದ ಉತ್ತರ"></textarea>'+(m?'<p class=bad>'+E(m)+'</p>':'')+'<button class=p data-a=u>ಉಳಿಸಿ</button> <button data-a=h>ಹಿಂದೆ</button></div>'}
+V.m.forEach(function(n){var q=d.qs[n];h+='<p><b>'+E(q.q)+'</b><br>ಉತ್ತರ: '+E(q.o[q.a])+(q.e?'<br><span class=m>'+E(q.e)+'</span>':'')+'</p>'});h+='</div>'}
+$.innerHTML=h+'<button class=p data-a=s data-i="'+V.id+'">ಮತ್ತೆ ಆಡಿ</button> <button data-a=w>ಅಂಕ ಹಂಚಿಕೊಳ್ಳಿ</button> <button data-a=h>ಮುಖಪುಟ</button>'}
+function wa(){var d=dk(V.id),t='ನಾನು "ನನ್ನ ಕ್ವಿಜ್" ಆ್ಯಪ್‌ನಲ್ಲಿ '+d.name+' ಕ್ವಿಜ್‌ನಲ್ಲಿ '+V.s+'/'+V.x.length+' ಅಂಕ ಗಳಿಸಿದೆ! 🔥 '+strk()+' ದಿನಗಳ ಸರಣಿ\n'+location.origin+location.pathname;
+if(navigator.share){navigator.share({text:t}).catch(function(){})}else{window.open('https://wa.me/?text='+encodeURIComponent(t))}}
+
+function ad(m){$.innerHTML='<div class=c><input type=text id=nm placeholder="ಕ್ವಿಜ್ ಹೆಸರು"><textarea id=tx placeholder="ಪ್ರತಿ ಸಾಲಿಗೆ ಒಂದು ಪ್ರಶ್ನೆ:&#10;ಕರ್ನಾಟಕದ ರಾಜಧಾನಿ? | ಮೈಸೂರು | ಬೆಂಗಳೂರು | ಮಂಗಳೂರು | 2 | ಬೆಂಗಳೂರು ರಾಜಧಾನಿ"></textarea><p class=m>ರೂಪ: ಪ್ರಶ್ನೆ | ಆಯ್ಕೆ | ಆಯ್ಕೆ | ಸರಿ ಸಂಖ್ಯೆ | ಕಾರಣ (ಕಾರಣ ಐಚ್ಛಿಕ)</p>'+(m?'<p class=bad>'+E(m)+'</p>':'')+'<button class=p data-a=u>ಉಳಿಸಿ</button> <button data-a=h>ಹಿಂದೆ</button></div>'}
 function im(){var t=document.getElementById('tx').value.trim(),qs=[];
-t.split(/\n+/).forEach(function(l){var f=l.split('|').map(function(x){return x.trim()}),a=parseInt(f.pop())-1,q=f.shift();
-if(q&&f.length>1&&a>=0&&a<f.length)qs.push({q:q,o:f,a:a,e:''})});
-if(!qs.length)return ad('ಸರಿಯಾದ ಸಾಲು ಸಿಗಲಿಲ್ಲ. ರೂಪ: ಪ್ರಶ್ನೆ | ಆಯ್ಕೆ | ಆಯ್ಕೆ | ಸರಿ ಸಂಖ್ಯೆ');
-S.d.push({id:'u'+Date.now(),name:document.getElementById('nm').value||'ನನ್ನ ಕ್ವಿಜ್',qs:qs,u:1});sv();home()}
+t.split(/\n+/).forEach(function(l){var f=l.split('|').map(function(x){return x.trim()}),r='';
+if(f.length>2&&!/^\d+$/.test(f[f.length-1]))r=f.pop();
+var a=parseInt(f.pop())-1,q=f.shift();
+if(q&&f.length>1&&a>=0&&a<f.length)qs.push({q:q,o:f,a:a,e:r})});
+if(!qs.length)return ad('ಸರಿಯಾದ ಸಾಲು ಸಿಗಲಿಲ್ಲ. ರೂಪ: ಪ್ರಶ್ನೆ | ಆಯ್ಕೆ | ಆಯ್ಕೆ | ಸರಿ ಸಂಖ್ಯೆ | ಕಾರಣ');
+S.u.push({id:'u'+Date.now(),name:document.getElementById('nm').value||'ನನ್ನ ಕ್ವಿಜ್',qs:qs,u:1});sv();home()}
+
 $.onclick=function(e){var b=e.target.closest('button');if(!b)return;var a=b.dataset.a,i=b.dataset.i;
-if(a=='s')st(i);else if(a=='k')pk(+b.dataset.k);else if(a=='t')nx();else if(a=='h')home();else if(a=='n')ad();else if(a=='u')im();
-else if(a=='x'&&confirm('ಅಳಿಸಬೇಕೆ?')){S.d=S.d.filter(function(d){return d.id!=i});sv();home()}};
+if(a=='s')st(i);else if(a=='k')pk(+b.dataset.k);else if(a=='t')nx();else if(a=='h')home();else if(a=='n')ad();else if(a=='u')im();else if(a=='w')wa();
+else if(a=='x'&&confirm('ಅಳಿಸಬೇಕೆ?')){S.u=S.u.filter(function(d){return d.id!=i});sv();home()}};
+$.onchange=function(e){if(e.target.id=='tt'){S.t=e.target.checked;sv()}};
 home();
 </script>
-</body></html>
+</body>
+</html>
