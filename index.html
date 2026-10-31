@@ -33,6 +33,7 @@ input[type=checkbox]{width:20px;height:20px;vertical-align:middle;margin-right:6
 select{font:inherit;padding:6px;border-radius:8px;background:var(--c);color:var(--f);border:1px solid var(--l)}
 textarea{min-height:170px}
 .bad{color:#b3261e}
+.sl{display:inline-block;min-width:36px;min-height:38px;border-bottom:2px solid var(--a);margin:4px;text-align:center;font-size:22px}
 .ch{min-width:40px;min-height:40px;padding:4px 0;margin:2px}
 </style>
 </head>
@@ -90,17 +91,20 @@ h='<div class=m>'+E(d.name)+' · 📝 ಪರೀಕ್ಷೆ · ಉತ್ತರ�
 V.x.forEach(function(_,i){h+='<button class="ch'+(i==V.i?' p':V.ans[i]!=null?' g':'')+'" data-a=ej data-j='+i+'>'+(i+1)+'</button>'});
 h+='</div><div class=c>'+(V.pp||V.grp?'':'<button class=st data-a=bm>'+(on?'★':'☆')+'</button>')+'<h2>'+(V.i+1)+'. '+E(q.q)+'</h2>';
 q.o.forEach(function(o,j){h+='<button class="o'+(a==j?' p':'')+'" data-a=ek data-k='+j+'>'+E(o)+'</button>'});
-$.innerHTML=h+'</div>'+(V.i>0?'<button data-a=ep>◀ ಹಿಂದೆ</button>':'')+(V.i<V.x.length-1?'<button data-a=en>ಮುಂದೆ ▶</button>':'')+'<button class=p data-a=sx>✅ ಸಲ್ಲಿಸಿ (Submit)</button><button data-a=h>ಬಿಡಿ</button>'}
+$.innerHTML=h+'</div>'+(V.w&&k<V.x.length?'<p class=bad><b>'+(V.x.length-k)+' ಪ್ರಶ್ನೆಗಳಿಗೆ ಉತ್ತರಿಸಿಲ್ಲ.</b> ಹಾಗೆಯೇ ಸಲ್ಲಿಸಲು ಮತ್ತೊಮ್ಮೆ "ಸಲ್ಲಿಸಿ" ಒತ್ತಿ.</p>':'')+(V.i>0?'<button data-a=ep>◀ ಹಿಂದೆ</button>':'')+(V.i<V.x.length-1?'<button data-a=en>ಮುಂದೆ ▶</button>':'')+'<button class=p data-a=sx>✅ ಸಲ್ಲಿಸಿ (Submit)</button><button data-a=h>ಬಿಡಿ</button>'}
 function sx(){var u=V.x.length-V.ans.filter(function(x){return x!=null}).length;
-if(u&&!confirm(u+' ಪ್ರಶ್ನೆಗಳಿಗೆ ಉತ್ತರಿಸಿಲ್ಲ. ಸಲ್ಲಿಸಲೇ?'))return;
+if(u&&!V.w){V.w=1;return qzx()}
 var d=dk(V.id),p=S.p[V.id]=S.p[V.id]||{};V.s=0;V.m=[];
 V.x.forEach(function(n,i){var q=d.qs[n];if(V.ans[i]==q.a){V.s++;if(!V.pp)p[n]=Math.min(3,(p[n]||0)+1)}else{if(!V.pp)p[n]=0;V.m.push(n)}});fin()}
-function wa(){var d=dk(V.id),t=V.g?'ನಾನು "ನನ್ನ ಕ್ವಿಜ್" ಆ್ಯಪ್‌ನಲ್ಲಿ '+d.name+(V.g=='g1'?' ಸರ್ವೈವಲ್':' 60 ಸೆಕೆಂಡ್')+' ಆಟದಲ್ಲಿ '+V.s+' ಅಂಕ ಗಳಿಸಿದೆ! 🔥 '+strk()+' ದಿನಗಳ ಸರಣಿ\n'+location.origin+location.pathname:'ನಾನು "ನನ್ನ ಕ್ವಿಜ್" ಆ್ಯಪ್‌ನಲ್ಲಿ '+d.name+' ಕ್ವಿಜ್‌ನಲ್ಲಿ '+V.s+'/'+V.x.length+' ಅಂಕ ಗಳಿಸಿದೆ! 🔥 '+strk()+' ದಿನಗಳ ಸರಣಿ\n'+location.origin+location.pathname;
+function wa(){var d=dk(V.id),t=V.g?'ನಾನು "ನನ್ನ ಕ್ವಿಜ್" ಆ್ಯಪ್‌ನಲ್ಲಿ '+d.name+' '+GN[V.g]+' ಆಟದಲ್ಲಿ '+V.s+' ಅಂಕ ಗಳಿಸಿದೆ! 🔥 '+strk()+' ದಿನಗಳ ಸರಣಿ\n'+location.origin+location.pathname:'ನಾನು "ನನ್ನ ಕ್ವಿಜ್" ಆ್ಯಪ್‌ನಲ್ಲಿ '+d.name+' ಕ್ವಿಜ್‌ನಲ್ಲಿ '+V.s+'/'+V.x.length+' ಅಂಕ ಗಳಿಸಿದೆ! 🔥 '+strk()+' ದಿನಗಳ ಸರಣಿ\n'+location.origin+location.pathname;
 if(navigator.share){navigator.share({text:t}).catch(function(){})}else{window.open('https://wa.me/?text='+encodeURIComponent(t))}}
 function gm(){clearInterval(T);$.innerHTML='<h2>🎮 ಕ್ವಿಜ್ ಆಟಗಳು</h2><div class=c><p>ವಿಷಯ ಆರಿಸಿ:</p><select id=gd>'+all().map(function(d){return'<option value="'+d.id+'">'+E(d.name)+'</option>'}).join('')+'</select></div>'+
 '<div class=c><b>❤️ ಸರ್ವೈವಲ್</b><p class=m>3 ಜೀವ. ತಪ್ಪಾದರೆ ಒಂದು ಜೀವ ಹೋಗುತ್ತದೆ. ಜೀವ ಮುಗಿಯುವವರೆಗೆ ಆಡಿ.</p><button class=p data-a=g1>ಆಡಿ</button></div>'+
-'<div class=c><b>⚡ 60 ಸೆಕೆಂಡ್ ರೌಂಡ್</b><p class=m>60 ಸೆಕೆಂಡ್‌ನಲ್ಲಿ ಎಷ್ಟು ಸರಿ ಉತ್ತರ ಕೊಡಬಲ್ಲಿರಿ?</p><button class=p data-a=g2>ಆಡಿ</button></div><button data-a=h>ಹಿಂದೆ</button>'}
-function gs(kind,id){clearInterval(T);var d=dk(id),o=d.qs.map(function(_,i){return i}).sort(function(){return Math.random()-.5});
+'<div class=c><b>⚡ 60 ಸೆಕೆಂಡ್ ರೌಂಡ್</b><p class=m>60 ಸೆಕೆಂಡ್‌ನಲ್ಲಿ ಎಷ್ಟು ಸರಿ ಉತ್ತರ ಕೊಡಬಲ್ಲಿರಿ?</p><button class=p data-a=g2>ಆಡಿ</button></div>'+
+'<div class=c><b>🔤 ಅಕ್ಷರ ಜೋಡಿಸಿ</b><p class=m>ಸುಳಿವು ನೋಡಿ, ಕದಡಿದ ಅಕ್ಷರಗಳನ್ನು ಸರಿಯಾದ ಕ್ರಮದಲ್ಲಿ ಜೋಡಿಸಿ ಉತ್ತರ ಪದ ಮಾಡಿ.</p><button class=p data-a=g3>ಆಡಿ</button></div>'+
+'<div class=c><b>✔️ ಸರಿ-ತಪ್ಪು</b><p class=m>ಹೇಳಿಕೆ ಸರಿಯೋ ತಪ್ಪೋ ತ್ವರಿತವಾಗಿ ಹೇಳಿ.</p><button class=p data-a=g4>ಆಡಿ</button></div>'+
+'<div class=c><b>🔗 ಜೋಡಿ ಹೊಂದಿಸಿ</b><p class=m>ಎಡಭಾಗದ ಪ್ರಶ್ನೆ ಒತ್ತಿ, ಬಲಭಾಗದ ಸರಿಯಾದ ಉತ್ತರ ಒತ್ತಿ.</p><button class=p data-a=g5>ಆಡಿ</button></div><button data-a=h>ಹಿಂದೆ</button>'}
+function gs(kind,id){clearInterval(T);if(kind=='g3')return ws(id);if(kind=='g4')return tfs(id);if(kind=='g5')return mts(id);var d=dk(id),o=d.qs.map(function(_,i){return i}).sort(function(){return Math.random()-.5});
 V={g:kind,id:id,o:o,i:0,s:0,l:3,t:60,miss:[],lock:0,done:0,a:null};
 if(kind=='g2')T=setInterval(function(){V.t--;var el=document.getElementById('gt');if(el)el.textContent='⏱ '+V.t;if(V.t<=0&&!V.done)gend()},1000);gq()}
 function gq(){var d=dk(V.id),q=d.qs[V.o[V.i%V.o.length]],
@@ -111,11 +115,11 @@ function gk(k){if(V.lock||V.done)return;var G=V;G.lock=1;G.a=k;var d=dk(G.id),n=
 if(k==q.a){G.s++;p[n]=Math.min(3,(p[n]||0)+1)}else{p[n]=0;G.miss.push([n,k]);if(G.g=='g1')G.l--}
 gq();setTimeout(function(){if(V!==G||G.done)return;if(G.g=='g1'&&G.l<=0)return gend();G.i++;G.a=null;G.lock=0;gq()},700)}
 function gend(){clearInterval(T);V.done=1;var d=dk(V.id),key=V.id+V.g,nb=V.s>(S.hs[key]||0);if(nb)S.hs[key]=V.s;bump();
-S.h.unshift({d:d.name+(V.g=='g1'?' ❤️':' ⚡'),s:V.s,n:V.s+V.miss.length,t:td(0)});S.h=S.h.slice(0,30);sv();
+S.h.unshift({d:d.name+' '+GE[V.g],s:V.s,n:V.tot||V.s+V.miss.length,t:td(0)});S.h=S.h.slice(0,30);sv();
 var h='<div class=c><div class=big>'+V.s+'</div><p style="text-align:center">ಅಂಕ · ಅತ್ಯುತ್ತಮ: '+(S.hs[key]||0)+(nb&&V.s>0?' 🏆 ಹೊಸ ದಾಖಲೆ!':'')+'</p><p style="text-align:center">🔥 '+strk()+' ದಿನಗಳ ಸರಣಿ</p></div>';
-if(V.miss.length){h+='<h2>ತಪ್ಪಿದ ಪ್ರಶ್ನೆಗಳು ಮತ್ತು ಸರಿ ಉತ್ತರಗಳು</h2>';V.miss.forEach(function(m){var q=d.qs[m[0]];h+='<div class="c r"><b>'+E(q.q)+'</b><br>ನಿಮ್ಮ ಉತ್ತರ: '+E(q.o[m[1]])+' ❌<br>ಸರಿ ಉತ್ತರ: <b>'+E(q.o[q.a])+'</b>'+(q.e?'<br><span class=m>'+E(q.e)+'</span>':'')+'</div>'})}
+if(V.miss.length){h+='<h2>ತಪ್ಪಿದ ಪ್ರಶ್ನೆಗಳು ಮತ್ತು ಸರಿ ಉತ್ತರಗಳು</h2>';V.miss.forEach(function(m){var q=dk(m[3]||V.id).qs[m[0]];h+='<div class="c r"><b>'+E(q.q)+'</b><br>ನಿಮ್ಮ ಉತ್ತರ: '+E(m.length>2?m[2]:q.o[m[1]])+' ❌<br>ಸರಿ ಉತ್ತರ: <b>'+E(q.o[q.a])+'</b>'+(q.e?'<br><span class=m>'+E(q.e)+'</span>':'')+'</div>'})}
 $.innerHTML=h+'<button class=p data-a='+V.g+' data-i="'+V.id+'">ಮತ್ತೆ ಆಡಿ</button><button data-a=w>ಅಂಕ ಹಂಚಿಕೊಳ್ಳಿ</button><button data-a=gm>🎮 ಆಟಗಳು</button><button data-a=h>ಮುಖಪುಟ</button>'}
-var P;
+var P,GN={g1:'ಸರ್ವೈವಲ್',g2:'60 ಸೆಕೆಂಡ್',g3:'ಅಕ್ಷರ ಜೋಡಿಸಿ',g4:'ಸರಿ-ತಪ್ಪು',g5:'ಜೋಡಿ ಹೊಂದಿಸಿ'},GE={g1:'❤️',g2:'⚡',g3:'🔤',g4:'✔️',g5:'🔗'};
 function rng(s){return function(){s|=0;s=s+0x6D2B79F5|0;var t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
 function pickq(d,seed,n){var r=rng(seed),a=d.qs.map(function(_,i){return i}),i,j,t;for(i=a.length-1;i>0;i--){j=Math.floor(r()*(i+1));t=a[i];a[i]=a[j];a[j]=t}return a.slice(0,n)}
 function sh(t){if(navigator.share){navigator.share({text:t}).catch(function(){})}else{window.open('https://wa.me/?text='+encodeURIComponent(t))}}
@@ -149,6 +153,34 @@ function ppn(){P.res.push({n:V.name,s:V.s,t:Math.round((Date.now()-V.t0)/1000)})
 if(P.k<P.nm.length){$.innerHTML='<div class=c style="text-align:center"><h2>ಧನ್ಯವಾದ '+E(V.name)+'!</h2><p>ಅಂಕ ಕೊನೆಯಲ್ಲಿ ತೋರಿಸಲಾಗುತ್ತದೆ. ಫೋನ್ ಮುಂದಿನವರಿಗೆ ಕೊಡಿ.</p><button class=p data-a=ppi>ಮುಂದಿನ: '+E(P.nm[P.k])+'</button></div>';return}
 $.innerHTML='<h2>🏆 ಫಲಿತಾಂಶ</h2>'+board(P.res)+'<button class=p data-a=pky>ಸರಿ ಉತ್ತರಗಳನ್ನು ನೋಡಿ</button><button data-a=h>ಮುಖಪುಟ</button>'}
 function ppk(){var d=dk(P.id),h='<h2>ಸರಿ ಉತ್ತರಗಳು</h2>';P.x.forEach(function(n,i){var q=d.qs[n];h+='<div class=c><b>'+(i+1)+'. '+E(q.q)+'</b><br>ಸರಿ ಉತ್ತರ: <b>'+E(q.o[q.a])+'</b>'+(q.e?'<br><span class=m>'+E(q.e)+'</span>':'')+'</div>'});$.innerHTML=h+'<button data-a=h>ಮುಖಪುಟ</button>'}
+function aks(w){return w.match(/[\u0C85-\u0C94][\u0C82\u0C83]?|[\u0C95-\u0CB9\u0CDE](?:\u0CCD[\u0C95-\u0CB9\u0CDE])*(?:\u0CCD|[\u0CBE-\u0CCC\u0CD5\u0CD6])?[\u0C82\u0C83]?|[\s\S]/g)||[]}
+function shuf(a){return a.sort(function(){return Math.random()-.5})}
+function pool(id,f){var g=function(ds){var r=[],seen={};ds.forEach(function(d){if(d.id!='maths')d.qs.forEach(function(q,n){var w=q.o[q.a];if(!seen[w]&&f(q,w)){seen[w]=1;r.push({d:d.id,n:n,w:w,u:aks(w)})}})});return r},r=g([dk(id)]);return r.length>=6?r:g(all())}
+function ws(id){var r=shuf(pool(id,function(q,w){var u=/^[\u0C80-\u0CFF]+$/.test(w)&&aks(w);return u&&u.length>=3&&u.length<=8})).slice(0,10);
+if(r.length<3)return alert('ಸಾಕಷ್ಟು ಪದಗಳಿಲ್ಲ.');V={g:'g3',id:id,rows:r,i:0,s:0,miss:[],tot:r.length};wr()}
+function wr(){var r=V.rows[V.i];V.tl=shuf(r.u.slice());V.pick=[];V.res=null;wq()}
+function wq(){var r=V.rows[V.i],h='<div class=m>🔤 '+(V.i+1)+' / '+V.rows.length+' · ಅಂಕ '+V.s+'</div><div class=c><h2>'+E(dk(r.d).qs[r.n].q)+'</h2><div>'+r.u.map(function(_,k){var t=V.pick[k];return'<span class=sl>'+(t==null?'':E(V.tl[t]))+'</span>'}).join('')+'</div><p></p>';
+if(V.res==null)h+=V.tl.map(function(u,k){var on=V.pick.indexOf(k)>=0;return'<button class="ch'+(on?' p':'')+'" data-a=wt data-k='+k+(on?' disabled':'')+'>'+E(u)+'</button>'}).join('')+'<br><button data-a=wu>⌫ ಅಳಿಸಿ</button><button data-a=wk>ಬಿಟ್ಟುಬಿಡಿ</button>';
+else h+='<p class=e><b>'+(V.res?'ಸರಿ! ✅':'ತಪ್ಪು ❌')+'</b> ಸರಿ ಉತ್ತರ: <b>'+E(r.w)+'</b></p><button class=p data-a=wn>'+(V.i+1<V.rows.length?'ಮುಂದೆ':'ಫಲಿತಾಂಶ')+'</button>';
+$.innerHTML=h+'</div><button data-a=h>ಬಿಡಿ</button>'}
+function wt(k){var r=V.rows[V.i];if(V.res!=null||V.pick.indexOf(k)>=0)return;V.pick.push(k);
+if(V.pick.length==r.u.length){var w=V.pick.map(function(t){return V.tl[t]}).join('');V.res=w==r.w?1:0;if(V.res)V.s++;else V.miss.push([r.n,-1,w,r.d])}wq()}
+function wu(){if(V.res==null){V.pick.pop();wq()}}
+function wk(){var r=V.rows[V.i];if(V.res!=null)return;V.res=0;V.miss.push([r.n,-1,'(ಬಿಟ್ಟಿರಿ)',r.d]);wq()}
+function wn(){V.i++;if(V.i>=V.rows.length)gend();else wr()}
+function tfs(id){var d=dk(id),r=shuf(d.qs.map(function(_,i){return i})).slice(0,10).map(function(n){var q=d.qs[n],t=Math.random()<.5,w=q.o.filter(function(_,k){return k!=q.a});return{n:n,o:t?q.o[q.a]:w[Math.floor(Math.random()*w.length)],t:t}});
+V={g:'g4',id:id,rows:r,i:0,s:0,miss:[],res:null,tot:r.length};tq()}
+function tq(){var r=V.rows[V.i],q=dk(V.id).qs[r.n],h='<div class=m>✔️ '+(V.i+1)+' / '+V.rows.length+' · ಅಂಕ '+V.s+'</div><div class=c><h2>'+E(q.q)+'</h2><p>ಉತ್ತರ: <b>'+E(r.o)+'</b></p><p>ಇದು ಸರಿಯೇ?</p>';
+if(V.res==null)h+='<button class=p data-a=tj data-k=1>✔️ ಸರಿ</button><button data-a=tj data-k=0>❌ ತಪ್ಪು</button>';
+else h+='<p class=e><b>'+(V.res?'ಸರಿ! ✅':'ತಪ್ಪು ❌')+'</b> ಸರಿ ಉತ್ತರ: <b>'+E(q.o[q.a])+'</b>'+(q.e?'<br>'+E(q.e):'')+'</p><button class=p data-a=tn>'+(V.i+1<V.rows.length?'ಮುಂದೆ':'ಫಲಿತಾಂಶ')+'</button>';
+$.innerHTML=h+'</div><button data-a=h>ಬಿಡಿ</button>'}
+function tj(k){var r=V.rows[V.i];if(V.res!=null)return;var ok=(!!k)==r.t;V.res=ok?1:0;if(ok)V.s++;else V.miss.push([r.n,-1,(k?'ಸರಿ':'ತಪ್ಪು')+' ಎಂದಿರಿ',V.id]);tq()}
+function tn(){V.i++;V.res=null;if(V.i>=V.rows.length)gend();else tq()}
+function mts(id){var r=shuf(pool(id,function(q,w){return w.length<=16&&q.q.length<=70})).slice(0,5);
+if(r.length<4)return alert('ಸಾಕಷ್ಟು ಜೋಡಿಗಳಿಲ್ಲ.');
+V={g:'g5',id:id,pr:r.map(function(x){return{d:x.d,n:x.n,q:dk(x.d).qs[x.n].q,a:x.w}}),ok:[],sel:null,err:0,s:0,miss:[],tot:r.length};V.ord=shuf(r.map(function(_,i){return i}));mq()}
+function mq(){var f=function(i){return V.ok.indexOf(i)>=0};$.innerHTML='<div class=m>🔗 ಹೊಂದಿಸಿ · ತಪ್ಪುಗಳು '+V.err+'</div><div style="display:flex;gap:8px"><div style="flex:1">'+V.pr.map(function(p,i){return'<button class="o'+(f(i)?' g':V.sel==i?' p':'')+'" data-a=ml data-k='+i+(f(i)?' disabled':'')+'>'+E(p.q)+'</button>'}).join('')+'</div><div style="flex:1">'+V.ord.map(function(i){return'<button class="o'+(f(i)?' g':'')+'" data-a=mr data-k='+i+(f(i)?' disabled':'')+'>'+E(V.pr[i].a)+'</button>'}).join('')+'</div></div><button data-a=h>ಬಿಡಿ</button>'}
+function mr(i){if(V.sel==null)return;if(i==V.sel){V.ok.push(i);V.sel=null;if(V.ok.length==V.pr.length){V.s=Math.max(0,V.pr.length-V.err);return gend()}}else{var p=V.pr[V.sel];V.err++;V.miss.push([p.n,-1,'ತಪ್ಪಾಗಿ ಹೊಂದಿಸಿದಿರಿ: '+V.pr[i].a,p.d]);V.sel=null}mq()}
 function hi(){var h='<h2>📊 ಇತಿಹಾಸ (ಕೊನೆಯ 30 ಆಟಗಳು)</h2>';
 if(!S.h.length)h+='<div class=c>ಇನ್ನೂ ಆಟ ಆಡಿಲ್ಲ.</div>';
 S.h.forEach(function(r){h+='<div class=c>'+E(r.d)+' · <b>'+r.s+'/'+r.n+'</b> <span class=m>'+r.t+'</span></div>'});
@@ -172,8 +204,8 @@ S.u.push({id:'u'+Date.now(),name:document.getElementById('nm').value||'ನನ್
 $.onclick=function(e){var b=e.target.closest('button');if(!b)return;var a=b.dataset.a,i=b.dataset.i;
 if(a=='s')st(i,'a');else if(a=='sw')st(i,'w');else if(a=='sb')st(i,'b');else if(a=='k')pk(+b.dataset.k);else if(a=='t')nx();else if(a=='h')home();
 else if(a=='n')ad();else if(a=='u')im();else if(a=='w')wa();else if(a=='bm')bm();else if(a=='hi')hi();else if(a=='bk')bk();else if(a=='cp')cp();else if(a=='rs')rs();
-else if(a=='ek'){V.ans[V.i]=+b.dataset.k;qzx()}else if(a=='ep'){V.i--;qzx()}else if(a=='en'){V.i++;qzx()}else if(a=='ej'){V.i=+b.dataset.j;qzx()}else if(a=='sx')sx();
-else if(a=='gm')gm();else if(a=='g1'||a=='g2')gs(a,i||document.getElementById('gd').value);else if(a=='gk')gk(+b.dataset.k);
+else if(a=='ek'){V.ans[V.i]=+b.dataset.k;V.w=0;qzx()}else if(a=='ep'){V.i--;qzx()}else if(a=='en'){V.i++;qzx()}else if(a=='ej'){V.i=+b.dataset.j;qzx()}else if(a=='sx')sx();
+else if(a=='gm')gm();else if(/^g[1-5]$/.test(a))gs(a,i||document.getElementById('gd').value);else if(a=='wt')wt(+b.dataset.k);else if(a=='wu')wu();else if(a=='wk')wk();else if(a=='wn')wn();else if(a=='tj')tj(+b.dataset.k);else if(a=='tn')tn();else if(a=='ml'){V.sel=+b.dataset.k;mq()}else if(a=='mr')mr(+b.dataset.k);else if(a=='gk')gk(+b.dataset.k);
 else if(a=='gx')gx();else if(a=='gc')gc();else if(a=='gsh')sh('ಪರೀಕ್ಷೆ ಕೋಡ್: '+i+'\n"ನನ್ನ ಕ್ವಿಜ್" ಆ್ಯಪ್ → 👥 ಗುಂಪು ಪರೀಕ್ಷೆ → ಪರೀಕ್ಷೆ ಬರೆಯಿರಿ\n'+location.origin+location.pathname);else if(a=='gb')gb();else if(a=='gl')gl();else if(a=='gsr')sh('ನನ್ನ ಫಲಿತಾಂಶ ಕೋಡ್:\n'+i);else if(a=='ans')show();else if(a=='pm')pm();else if(a=='pst')pst();else if(a=='ppi')ppi();else if(a=='pgo')pgo();else if(a=='pky')ppk();
 else if(a=='x'&&confirm('ಅಳಿಸಬೇಕೆ?')){S.u=S.u.filter(function(d){return d.id!=i});sv();home()}};
 $.onchange=function(e){var i=e.target.id;if(i=='tt')S.t=e.target.checked;else if(i=='ex')S.x=e.target.checked;else if(i=='zz'){S.z=e.target.checked;document.body.className=S.z?'lg':''}else if(i=='nn')S.n=+e.target.value;sv()};
