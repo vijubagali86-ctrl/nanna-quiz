@@ -12,11 +12,12 @@
 @media(prefers-color-scheme:dark){:root{--b:#121815;--f:#e8ede9;--c:#1b231f;--m:#9aa59e;--l:#2d3832;--a:#4cc196;--ok:#17321f;--no:#3a1d1a}}
 *{box-sizing:border-box}
 body{margin:0;background:var(--b);color:var(--f);font:16px/1.6 system-ui,sans-serif;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+body.lg{font-size:21px}
 main{max-width:600px;margin:auto;padding:16px}
 h1{font-size:22px}h2{font-size:18px;margin:0 0 8px}
 .c{display:block;background:var(--c);border:1px solid var(--l);border-radius:14px;padding:14px;margin:10px 0}
 .m{color:var(--m);font-size:14px}
-button{font:inherit;color:var(--f);background:var(--c);border:1px solid var(--l);border-radius:10px;padding:10px 14px;min-height:44px;margin:4px 0}
+button{font:inherit;color:var(--f);background:var(--c);border:1px solid var(--l);border-radius:10px;padding:10px 14px;min-height:44px;margin:4px 2px 4px 0}
 .p{background:var(--a);color:var(--c);border-color:var(--a);font-weight:600}
 .o{display:block;width:100%;text-align:left}
 .g{background:var(--ok);border-color:#1e7a3c}
@@ -26,10 +27,13 @@ button{font:inherit;color:var(--f);background:var(--c);border:1px solid var(--l)
 .e{background:var(--b);padding:10px;border-radius:10px}
 .big{font-size:44px;font-weight:700;text-align:center}
 .tm{font-size:20px;font-weight:700;color:var(--a)}
+.st{float:right;min-height:36px;padding:2px 12px;font-size:20px}
 input[type=text],textarea{width:100%;font:inherit;padding:10px;border:1px solid var(--l);border-radius:10px;background:var(--c);color:var(--f);margin-bottom:8px}
 input[type=checkbox]{width:20px;height:20px;vertical-align:middle;margin-right:6px}
+select{font:inherit;padding:6px;border-radius:8px;background:var(--c);color:var(--f);border:1px solid var(--l)}
 textarea{min-height:170px}
 .bad{color:#b3261e}
+.ch{min-width:40px;min-height:40px;padding:4px 0;margin:2px}
 </style>
 </head>
 <body>
@@ -42,43 +46,87 @@ var D=[{id:'g',name:'ಸಾಮಾನ್ಯ ಜ್ಞಾನ',qs:[
 {q:'ಭಾರತದ ರಾಜಧಾನಿ ಯಾವುದು?',o:['ಮುಂಬೈ','ನವದೆಹಲಿ','ಚೆನ್ನೈ','ಕೋಲ್ಕತ್ತಾ'],a:1,e:'ನವದೆಹಲಿ ಭಾರತದ ರಾಜಧಾನಿ.'},
 {q:'12 × 8 ಎಷ್ಟು?',o:['86','96','98','108'],a:1,e:'12 × 8 = 96'},
 {q:'ಕರ್ನಾಟಕದ ರಾಜಧಾನಿ ಯಾವುದು?',o:['ಮೈಸೂರು','ಬೆಂಗಳೂರು','ಹುಬ್ಬಳ್ಳಿ','ಮಂಗಳೂರು'],a:1,e:'ಬೆಂಗಳೂರು ಕರ್ನಾಟಕದ ರಾಜಧಾನಿ.'}]}];
+function mk(o){return{p:o.p||{},k:o.k,t:o.t,z:o.z,x:o.x,hs:o.hs||{},n:o.n||10,h:o.h||[],b:o.b||{},u:o.u||(o.d||[]).filter(function(d){return d.u})}}
 var L={};try{L=JSON.parse(localStorage.getItem(K))||{}}catch(e){}
-S={p:L.p||{},k:L.k,t:L.t,u:L.u||(L.d||[]).filter(function(d){return d.u})};
+S=mk(L);
 function sv(){try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}}
 function all(){return(window.BANK&&window.BANK.length?window.BANK:D).concat(S.u)}
 function dk(i){return all().filter(function(d){return d.id==i})[0]}
 function E(t){return String(t).replace(/[&<>"]/g,function(c){return'&#'+c.charCodeAt(0)+';'})}
 function td(o){var d=new Date();d.setDate(d.getDate()-(o||0));return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()}
 function strk(){var k=S.k;return k&&(k.l===td(0)||k.l===td(1))?k.n:0}
-function bump(){var k=S.k||{n:0,l:''},t=td(0);if(k.l!==t){k.n=k.l===td(1)?k.n+1:1;k.l=t}S.k=k;sv()}
+function bump(){var k=S.k||{n:0,l:''},t=td(0);if(k.l!==t){k.n=k.l===td(1)?k.n+1:1;k.l=t}S.k=k}
 
-function home(){clearInterval(T);var n=strk(),h='<div class=c>'+(n?'🔥 <b>'+n+' ದಿನಗಳ ಸರಣಿ</b>':'ಇಂದು ಒಂದು ಕ್ವಿಜ್ ಆಡಿ, ಸರಣಿ ಶುರು ಮಾಡಿ')+'</div>'+
-'<label class=c><input type=checkbox id=tt'+(S.t?' checked':'')+'>⏱ ಟೈಮರ್ ಮೋಡ್ (ಪ್ರತಿ ಪ್ರಶ್ನೆಗೆ 20 ಸೆಕೆಂಡ್)</label>';
-all().forEach(function(d){var p=S.p[d.id]||{},c=0;
-d.qs.forEach(function(_,i){if((p[i]||0)>2)c++});
+function home(){clearInterval(T);document.body.className=S.z?'lg':'';var n=strk(),h='<div class=c>'+(n?'🔥 <b>'+n+' ದಿನಗಳ ಸರಣಿ</b>':'ಇಂದು ಒಂದು ಕ್ವಿಜ್ ಆಡಿ, ಸರಣಿ ಶುರು ಮಾಡಿ')+'</div>'+
+'<div class=c><label><input type=checkbox id=tt'+(S.t?' checked':'')+'>⏱ ಟೈಮರ್ (ಪ್ರತಿ ಪ್ರಶ್ನೆಗೆ 20 ಸೆಕೆಂಡ್)</label><br><label><input type=checkbox id=ex'+(S.x?' checked':'')+'>📝 ಪರೀಕ್ಷೆ ಮೋಡ್ (ಎಲ್ಲಾ ಉತ್ತರಿಸಿ, ಕೊನೆಯಲ್ಲಿ ಸಲ್ಲಿಸಿ)</label><br><label><input type=checkbox id=zz'+(S.z?' checked':'')+'>🔠 ದೊಡ್ಡ ಅಕ್ಷರ</label><br><label>ಪ್ರಶ್ನೆಗಳ ಸಂಖ್ಯೆ: <select id=nn>'+[5,10,20].map(function(x){return'<option'+(S.n==x?' selected':'')+'>'+x+'</option>'}).join('')+'</select></label></div>';
+all().forEach(function(d){var p=S.p[d.id]||{},c=0,w=0,bc=(S.b[d.id]||[]).length,i0='data-i="'+d.id+'"';
+d.qs.forEach(function(_,i){if((p[i]||0)>2)c++;if(p[i]===0)w++});
 var m=Math.round(100*c/d.qs.length);
-h+='<div class=c><b>'+E(d.name)+'</b><div class=m>'+d.qs.length+' ಪ್ರಶ್ನೆಗಳು · ಕಲಿತಿದ್ದು '+m+'%</div><div class=bar><i style="width:'+m+'%"></i></div><button class=p data-a=s data-i="'+d.id+'">ಶುರು ಮಾಡಿ</button> '+(d.u?'<button data-a=x data-i="'+d.id+'">ಅಳಿಸಿ</button>':'')+'</div>'});
-$.innerHTML=h+'<button data-a=n>+ ಹೊಸ ಕ್ವಿಜ್ ಸೇರಿಸಿ</button>'}
+h+='<div class=c><b>'+E(d.name)+'</b><div class=m>'+d.qs.length+' ಪ್ರಶ್ನೆಗಳು · ಕಲಿತಿದ್ದು '+m+'%</div><div class=bar><i style="width:'+m+'%"></i></div><button class=p data-a=s '+i0+'>ಶುರು ಮಾಡಿ</button>'+
+(w?'<button data-a=sw '+i0+'>ತಪ್ಪಿದವು ('+w+')</button>':'')+(bc?'<button data-a=sb '+i0+'>⭐ ('+bc+')</button>':'')+(d.u?'<button data-a=x '+i0+'>ಅಳಿಸಿ</button>':'')+'</div>'});
+$.innerHTML=h+'<button data-a=n>+ ಹೊಸ ಕ್ವಿಜ್</button><button data-a=gm>🎮 ಆಟಗಳು</button><button data-a=hi>📊 ಇತಿಹಾಸ</button><button data-a=bk>💾 ಬ್ಯಾಕಪ್</button>'}
 
-function tm(){clearInterval(T);if(!S.t)return;V.c=20;T=setInterval(function(){V.c--;var el=document.getElementById('tm');if(el)el.textContent='⏱ '+V.c;if(V.c<=0)pk(-1)},1000)}
-function st(id){var d=dk(id),p=S.p[id]||{};
-V={id:id,i:0,s:0,m:[],a:null,x:d.qs.map(function(_,i){return[i,(p[i]||0)+Math.random()]}).sort(function(a,b){return a[1]-b[1]}).slice(0,10).map(function(z){return z[0]})};tm();qz()}
-function qz(){var d=dk(V.id),q=d.qs[V.x[V.i]],h='<div class=m>'+E(d.name)+' · '+(V.i+1)+' / '+V.x.length+'</div>'+(S.t&&V.a==null?'<div id=tm class=tm>⏱ '+V.c+'</div>':'')+'<div class=c><h2>'+E(q.q)+'</h2>';
+function tm(){clearInterval(T);if(!S.t||V.ex)return;V.c=20;T=setInterval(function(){V.c--;var el=document.getElementById('tm');if(el)el.textContent='⏱ '+V.c;if(V.c<=0)pk(-1)},1000)}
+function st(id,mode){var d=dk(id),p=S.p[id]||{},bm=S.b[id]||[];
+var pool=d.qs.map(function(_,i){return i}).filter(function(i){return mode=='w'?p[i]===0:mode=='b'?bm.indexOf(i)>=0:true});
+V={id:id,mode:mode,ex:!!S.x,ans:[],i:0,s:0,m:[],a:null,x:pool.map(function(i){return[i,(p[i]||0)+Math.random()]}).sort(function(a,b){return a[1]-b[1]}).slice(0,S.n||10).map(function(z){return z[0]})};tm();if(V.ex)qzx();else qz()}
+function qz(){var d=dk(V.id),n=V.x[V.i],q=d.qs[n],on=(S.b[V.id]||[]).indexOf(n)>=0,
+h='<div class=m>'+E(d.name)+' · '+(V.i+1)+' / '+V.x.length+'</div>'+(S.t&&!V.ex&&V.a==null?'<div id=tm class=tm>⏱ '+V.c+'</div>':'')+'<div class=c><button class=st data-a=bm>'+(on?'★':'☆')+'</button><h2>'+E(q.q)+'</h2>';
 q.o.forEach(function(o,k){var c='o';if(V.a!=null)c+=k==q.a?' g':k==V.a?' r':'';
 h+='<button class="'+c+'" data-a=k data-k='+k+(V.a!=null?' disabled':'')+'>'+E(o)+'</button>'});
 if(V.a!=null)h+='<p class=e><b>'+(V.a==-1?'ಸಮಯ ಮುಗಿಯಿತು.':V.a==q.a?'ಸರಿ!':'ತಪ್ಪು.')+'</b> '+E(q.e||'')+'</p><button class=p data-a=t>'+(V.i+1<V.x.length?'ಮುಂದೆ':'ಫಲಿತಾಂಶ ನೋಡಿ')+'</button>';
 $.innerHTML=h+'</div><button data-a=h>ಬಿಡಿ</button>'}
+function bm(){var n=V.x[V.i],a=S.b[V.id]=S.b[V.id]||[],j=a.indexOf(n);if(j<0)a.push(n);else a.splice(j,1);sv();if(V.ex)qzx();else qz()}
 function pk(k){if(V.a!=null)return;clearInterval(T);var n=V.x[V.i],q=dk(V.id).qs[n],p=S.p[V.id]=S.p[V.id]||{};
-V.a=k;if(k==q.a){V.s++;p[n]=Math.min(3,(p[n]||0)+1)}else{p[n]=0;V.m.push(n)}sv();qz()}
-function nx(){V.i++;V.a=null;if(V.i<V.x.length){tm();return qz()}
-bump();var d=dk(V.id),h='<div class=c><div class=big>'+V.s+' / '+V.x.length+'</div><p style="text-align:center">🔥 '+strk()+' ದಿನಗಳ ಸರಣಿ</p></div>';
-if(V.m.length){h+='<div class=c><h2>ಮತ್ತೊಮ್ಮೆ ನೋಡಿ</h2>';
-V.m.forEach(function(n){var q=d.qs[n];h+='<p><b>'+E(q.q)+'</b><br>ಉತ್ತರ: '+E(q.o[q.a])+(q.e?'<br><span class=m>'+E(q.e)+'</span>':'')+'</p>'});h+='</div>'}
-$.innerHTML=h+'<button class=p data-a=s data-i="'+V.id+'">ಮತ್ತೆ ಆಡಿ</button> <button data-a=w>ಅಂಕ ಹಂಚಿಕೊಳ್ಳಿ</button> <button data-a=h>ಮುಖಪುಟ</button>'}
-function wa(){var d=dk(V.id),t='ನಾನು "ನನ್ನ ಕ್ವಿಜ್" ಆ್ಯಪ್‌ನಲ್ಲಿ '+d.name+' ಕ್ವಿಜ್‌ನಲ್ಲಿ '+V.s+'/'+V.x.length+' ಅಂಕ ಗಳಿಸಿದೆ! 🔥 '+strk()+' ದಿನಗಳ ಸರಣಿ\n'+location.origin+location.pathname;
+V.a=k;V.ans[V.i]=k;if(k==q.a){V.s++;p[n]=Math.min(3,(p[n]||0)+1)}else{p[n]=0;V.m.push(n)}sv();qz()}
+function nx(){V.i++;V.a=null;if(V.i<V.x.length){tm();return qz()}fin()}
+function fin(){var d=dk(V.id);bump();S.h.unshift({d:d.name+(V.ex?' (ಪರೀಕ್ಷೆ)':''),s:V.s,n:V.x.length,t:td(0)});S.h=S.h.slice(0,30);sv();show()}
+function show(){var d=dk(V.id),h='<div class=c><div class=big>'+V.s+' / '+V.x.length+'</div><p style="text-align:center">🔥 '+strk()+' ದಿನಗಳ ಸರಣಿ</p></div><h2>ಉತ್ತರಗಳು</h2>';
+V.x.forEach(function(n,i){var q=d.qs[n],a=V.ans[i],ok=a==q.a;
+h+='<div class="c '+(ok?'g':'r')+'"><b>'+(i+1)+'. '+E(q.q)+'</b><br>ನಿಮ್ಮ ಉತ್ತರ: '+(a==null||a<0?'<i>ಉತ್ತರಿಸಿಲ್ಲ</i>':E(q.o[a]))+(ok?' ✅':' ❌')+(ok?'':'<br>ಸರಿ ಉತ್ತರ: <b>'+E(q.o[q.a])+'</b>')+(q.e?'<br><span class=m>'+E(q.e)+'</span>':'')+'</div>'});
+$.innerHTML=h+'<button class=p data-a='+(V.mode=='w'?'sw':V.mode=='b'?'sb':'s')+' data-i="'+V.id+'">ಮತ್ತೆ ಆಡಿ</button><button data-a=w>ಅಂಕ ಹಂಚಿಕೊಳ್ಳಿ</button><button data-a=h>ಮುಖಪುಟ</button>'}
+function qzx(){var d=dk(V.id),n=V.x[V.i],q=d.qs[n],a=V.ans[V.i],on=(S.b[V.id]||[]).indexOf(n)>=0,k=V.ans.filter(function(x){return x!=null}).length,
+h='<div class=m>'+E(d.name)+' · 📝 ಪರೀಕ್ಷೆ · ಉತ್ತರಿಸಿದ್ದು '+k+'/'+V.x.length+'</div><div>';
+V.x.forEach(function(_,i){h+='<button class="ch'+(i==V.i?' p':V.ans[i]!=null?' g':'')+'" data-a=ej data-j='+i+'>'+(i+1)+'</button>'});
+h+='</div><div class=c><button class=st data-a=bm>'+(on?'★':'☆')+'</button><h2>'+(V.i+1)+'. '+E(q.q)+'</h2>';
+q.o.forEach(function(o,j){h+='<button class="o'+(a==j?' p':'')+'" data-a=ek data-k='+j+'>'+E(o)+'</button>'});
+$.innerHTML=h+'</div>'+(V.i>0?'<button data-a=ep>◀ ಹಿಂದೆ</button>':'')+(V.i<V.x.length-1?'<button data-a=en>ಮುಂದೆ ▶</button>':'')+'<button class=p data-a=sx>✅ ಸಲ್ಲಿಸಿ (Submit)</button><button data-a=h>ಬಿಡಿ</button>'}
+function sx(){var u=V.x.length-V.ans.filter(function(x){return x!=null}).length;
+if(u&&!confirm(u+' ಪ್ರಶ್ನೆಗಳಿಗೆ ಉತ್ತರಿಸಿಲ್ಲ. ಸಲ್ಲಿಸಲೇ?'))return;
+var d=dk(V.id),p=S.p[V.id]=S.p[V.id]||{};V.s=0;V.m=[];
+V.x.forEach(function(n,i){var q=d.qs[n];if(V.ans[i]==q.a){V.s++;p[n]=Math.min(3,(p[n]||0)+1)}else{p[n]=0;V.m.push(n)}});fin()}
+function wa(){var d=dk(V.id),t=V.g?'ನಾನು "ನನ್ನ ಕ್ವಿಜ್" ಆ್ಯಪ್‌ನಲ್ಲಿ '+d.name+(V.g=='g1'?' ಸರ್ವೈವಲ್':' 60 ಸೆಕೆಂಡ್')+' ಆಟದಲ್ಲಿ '+V.s+' ಅಂಕ ಗಳಿಸಿದೆ! 🔥 '+strk()+' ದಿನಗಳ ಸರಣಿ\n'+location.origin+location.pathname:'ನಾನು "ನನ್ನ ಕ್ವಿಜ್" ಆ್ಯಪ್‌ನಲ್ಲಿ '+d.name+' ಕ್ವಿಜ್‌ನಲ್ಲಿ '+V.s+'/'+V.x.length+' ಅಂಕ ಗಳಿಸಿದೆ! 🔥 '+strk()+' ದಿನಗಳ ಸರಣಿ\n'+location.origin+location.pathname;
 if(navigator.share){navigator.share({text:t}).catch(function(){})}else{window.open('https://wa.me/?text='+encodeURIComponent(t))}}
+function gm(){clearInterval(T);$.innerHTML='<h2>🎮 ಕ್ವಿಜ್ ಆಟಗಳು</h2><div class=c><p>ವಿಷಯ ಆರಿಸಿ:</p><select id=gd>'+all().map(function(d){return'<option value="'+d.id+'">'+E(d.name)+'</option>'}).join('')+'</select></div>'+
+'<div class=c><b>❤️ ಸರ್ವೈವಲ್</b><p class=m>3 ಜೀವ. ತಪ್ಪಾದರೆ ಒಂದು ಜೀವ ಹೋಗುತ್ತದೆ. ಜೀವ ಮುಗಿಯುವವರೆಗೆ ಆಡಿ.</p><button class=p data-a=g1>ಆಡಿ</button></div>'+
+'<div class=c><b>⚡ 60 ಸೆಕೆಂಡ್ ರೌಂಡ್</b><p class=m>60 ಸೆಕೆಂಡ್‌ನಲ್ಲಿ ಎಷ್ಟು ಸರಿ ಉತ್ತರ ಕೊಡಬಲ್ಲಿರಿ?</p><button class=p data-a=g2>ಆಡಿ</button></div><button data-a=h>ಹಿಂದೆ</button>'}
+function gs(kind,id){clearInterval(T);var d=dk(id),o=d.qs.map(function(_,i){return i}).sort(function(){return Math.random()-.5});
+V={g:kind,id:id,o:o,i:0,s:0,l:3,t:60,miss:[],lock:0,done:0,a:null};
+if(kind=='g2')T=setInterval(function(){V.t--;var el=document.getElementById('gt');if(el)el.textContent='⏱ '+V.t;if(V.t<=0&&!V.done)gend()},1000);gq()}
+function gq(){var d=dk(V.id),q=d.qs[V.o[V.i%V.o.length]],
+h='<div class=m>'+E(d.name)+'</div><div class=c style="text-align:center"><b>'+(V.g=='g1'?'❤️'.repeat(V.l)+'🖤'.repeat(3-V.l):'<span id=gt>⏱ '+V.t+'</span>')+' · ಅಂಕ '+V.s+'</b></div><div class=c><h2>'+E(q.q)+'</h2>';
+q.o.forEach(function(o,k){var c='o';if(V.a!=null)c+=k==q.a?' g':k==V.a?' r':'';h+='<button class="'+c+'" data-a=gk data-k='+k+'>'+E(o)+'</button>'});
+$.innerHTML=h+'</div><button data-a=h>ಬಿಡಿ</button>'}
+function gk(k){if(V.lock||V.done)return;var G=V;G.lock=1;G.a=k;var d=dk(G.id),n=G.o[G.i%G.o.length],q=d.qs[n],p=S.p[G.id]=S.p[G.id]||{};
+if(k==q.a){G.s++;p[n]=Math.min(3,(p[n]||0)+1)}else{p[n]=0;G.miss.push([n,k]);if(G.g=='g1')G.l--}
+gq();setTimeout(function(){if(V!==G||G.done)return;if(G.g=='g1'&&G.l<=0)return gend();G.i++;G.a=null;G.lock=0;gq()},700)}
+function gend(){clearInterval(T);V.done=1;var d=dk(V.id),key=V.id+V.g,nb=V.s>(S.hs[key]||0);if(nb)S.hs[key]=V.s;bump();
+S.h.unshift({d:d.name+(V.g=='g1'?' ❤️':' ⚡'),s:V.s,n:V.s+V.miss.length,t:td(0)});S.h=S.h.slice(0,30);sv();
+var h='<div class=c><div class=big>'+V.s+'</div><p style="text-align:center">ಅಂಕ · ಅತ್ಯುತ್ತಮ: '+(S.hs[key]||0)+(nb&&V.s>0?' 🏆 ಹೊಸ ದಾಖಲೆ!':'')+'</p><p style="text-align:center">🔥 '+strk()+' ದಿನಗಳ ಸರಣಿ</p></div>';
+if(V.miss.length){h+='<h2>ತಪ್ಪಿದ ಪ್ರಶ್ನೆಗಳು ಮತ್ತು ಸರಿ ಉತ್ತರಗಳು</h2>';V.miss.forEach(function(m){var q=d.qs[m[0]];h+='<div class="c r"><b>'+E(q.q)+'</b><br>ನಿಮ್ಮ ಉತ್ತರ: '+E(q.o[m[1]])+' ❌<br>ಸರಿ ಉತ್ತರ: <b>'+E(q.o[q.a])+'</b>'+(q.e?'<br><span class=m>'+E(q.e)+'</span>':'')+'</div>'})}
+$.innerHTML=h+'<button class=p data-a='+V.g+' data-i="'+V.id+'">ಮತ್ತೆ ಆಡಿ</button><button data-a=w>ಅಂಕ ಹಂಚಿಕೊಳ್ಳಿ</button><button data-a=gm>🎮 ಆಟಗಳು</button><button data-a=h>ಮುಖಪುಟ</button>'}
+function hi(){var h='<h2>📊 ಇತಿಹಾಸ (ಕೊನೆಯ 30 ಆಟಗಳು)</h2>';
+if(!S.h.length)h+='<div class=c>ಇನ್ನೂ ಆಟ ಆಡಿಲ್ಲ.</div>';
+S.h.forEach(function(r){h+='<div class=c>'+E(r.d)+' · <b>'+r.s+'/'+r.n+'</b> <span class=m>'+r.t+'</span></div>'});
+$.innerHTML=h+'<button data-a=h>ಹಿಂದೆ</button>'}
+function bk(){var j=JSON.stringify({p:S.p,k:S.k,u:S.u,h:S.h,b:S.b,n:S.n,t:S.t,z:S.z,x:S.x,hs:S.hs});
+$.innerHTML='<h2>💾 ಬ್ಯಾಕಪ್</h2><div class=c><p class=m>ಈ ಪಠ್ಯವನ್ನು ನಕಲು ಮಾಡಿ Notes ನಲ್ಲಿ ಉಳಿಸಿ. ಬೇರೆ ಫೋನ್‌ನಲ್ಲಿ ಅಥವಾ ಡೇಟಾ ಅಳಿದ ನಂತರ ಇದೇ ಪಠ್ಯವನ್ನು ಈ ಬಾಕ್ಸ್‌ನಲ್ಲಿ ಹಾಕಿ ಮರುಸ್ಥಾಪಿಸಿ.</p><textarea id=bj>'+E(j)+'</textarea><button class=p data-a=cp>ನಕಲು ಮಾಡಿ</button><button data-a=rs>ಮರುಸ್ಥಾಪಿಸಿ</button> <span id=cm class=m></span></div><button data-a=h>ಹಿಂದೆ</button>'}
+function cp(){var t=document.getElementById('bj'),m=document.getElementById('cm');t.select();
+try{(navigator.clipboard?navigator.clipboard.writeText(t.value):Promise.reject()).then(function(){m.textContent='ನಕಲಾಯಿತು'},function(){m.textContent=document.execCommand('copy')?'ನಕಲಾಯಿತು':'ಆರಿಸಿ ನಕಲು ಮಾಡಿ'})}catch(x){m.textContent='ಆರಿಸಿ ನಕಲು ಮಾಡಿ'}}
+function rs(){try{var o=JSON.parse(document.getElementById('bj').value);if(!o||typeof o!='object'||!o.p)throw 0;
+if(!confirm('ಈಗಿನ ಡೇಟಾ ಬದಲಾಗುತ್ತದೆ. ಮುಂದುವರಿಸಲೇ?'))return;S=mk(o);sv();home()}catch(e){alert('ಪಠ್ಯ ಸರಿಯಿಲ್ಲ. ಪೂರ್ತಿ ಬ್ಯಾಕಪ್ ಪಠ್ಯ ಹಾಕಿ.')}}
 
-function ad(m){$.innerHTML='<div class=c><input type=text id=nm placeholder="ಕ್ವಿಜ್ ಹೆಸರು"><textarea id=tx placeholder="ಪ್ರತಿ ಸಾಲಿಗೆ ಒಂದು ಪ್ರಶ್ನೆ:&#10;ಕರ್ನಾಟಕದ ರಾಜಧಾನಿ? | ಮೈಸೂರು | ಬೆಂಗಳೂರು | ಮಂಗಳೂರು | 2 | ಬೆಂಗಳೂರು ರಾಜಧಾನಿ"></textarea><p class=m>ರೂಪ: ಪ್ರಶ್ನೆ | ಆಯ್ಕೆ | ಆಯ್ಕೆ | ಸರಿ ಸಂಖ್ಯೆ | ಕಾರಣ (ಕಾರಣ ಐಚ್ಛಿಕ)</p>'+(m?'<p class=bad>'+E(m)+'</p>':'')+'<button class=p data-a=u>ಉಳಿಸಿ</button> <button data-a=h>ಹಿಂದೆ</button></div>'}
+function ad(m){$.innerHTML='<div class=c><input type=text id=nm placeholder="ಕ್ವಿಜ್ ಹೆಸರು"><textarea id=tx placeholder="ಪ್ರತಿ ಸಾಲಿಗೆ ಒಂದು ಪ್ರಶ್ನೆ:&#10;ಕರ್ನಾಟಕದ ರಾಜಧಾನಿ? | ಮೈಸೂರು | ಬೆಂಗಳೂರು | ಮಂಗಳೂರು | 2 | ಬೆಂಗಳೂರು ರಾಜಧಾನಿ"></textarea><p class=m>ರೂಪ: ಪ್ರಶ್ನೆ | ಆಯ್ಕೆ | ಆಯ್ಕೆ | ಸರಿ ಸಂಖ್ಯೆ | ಕಾರಣ (ಕಾರಣ ಐಚ್ಛಿಕ)</p>'+(m?'<p class=bad>'+E(m)+'</p>':'')+'<button class=p data-a=u>ಉಳಿಸಿ</button><button data-a=h>ಹಿಂದೆ</button></div>'}
 function im(){var t=document.getElementById('tx').value.trim(),qs=[];
 t.split(/\n+/).forEach(function(l){var f=l.split('|').map(function(x){return x.trim()}),r='';
 if(f.length>2&&!/^\d+$/.test(f[f.length-1]))r=f.pop();
@@ -88,9 +136,12 @@ if(!qs.length)return ad('ಸರಿಯಾದ ಸಾಲು ಸಿಗಲಿಲ್�
 S.u.push({id:'u'+Date.now(),name:document.getElementById('nm').value||'ನನ್ನ ಕ್ವಿಜ್',qs:qs,u:1});sv();home()}
 
 $.onclick=function(e){var b=e.target.closest('button');if(!b)return;var a=b.dataset.a,i=b.dataset.i;
-if(a=='s')st(i);else if(a=='k')pk(+b.dataset.k);else if(a=='t')nx();else if(a=='h')home();else if(a=='n')ad();else if(a=='u')im();else if(a=='w')wa();
+if(a=='s')st(i,'a');else if(a=='sw')st(i,'w');else if(a=='sb')st(i,'b');else if(a=='k')pk(+b.dataset.k);else if(a=='t')nx();else if(a=='h')home();
+else if(a=='n')ad();else if(a=='u')im();else if(a=='w')wa();else if(a=='bm')bm();else if(a=='hi')hi();else if(a=='bk')bk();else if(a=='cp')cp();else if(a=='rs')rs();
+else if(a=='ek'){V.ans[V.i]=+b.dataset.k;qzx()}else if(a=='ep'){V.i--;qzx()}else if(a=='en'){V.i++;qzx()}else if(a=='ej'){V.i=+b.dataset.j;qzx()}else if(a=='sx')sx();
+else if(a=='gm')gm();else if(a=='g1'||a=='g2')gs(a,i||document.getElementById('gd').value);else if(a=='gk')gk(+b.dataset.k);
 else if(a=='x'&&confirm('ಅಳಿಸಬೇಕೆ?')){S.u=S.u.filter(function(d){return d.id!=i});sv();home()}};
-$.onchange=function(e){if(e.target.id=='tt'){S.t=e.target.checked;sv()}};
+$.onchange=function(e){var i=e.target.id;if(i=='tt')S.t=e.target.checked;else if(i=='ex')S.x=e.target.checked;else if(i=='zz'){S.z=e.target.checked;document.body.className=S.z?'lg':''}else if(i=='nn')S.n=+e.target.value;sv()};
 home();
 </script>
 </body>
